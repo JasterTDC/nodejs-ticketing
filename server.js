@@ -8,25 +8,38 @@ var     express   = require('express'),
         bodyPar   = require('body-parser'),
         methodOv  = require('method-override'),
         mongoose  = require('mongoose'),
+        fsr       = require('file-stream-rotator'),
+        logDirectory = __dirname + '/log',
+        favicon   = require ('serve-favicon');
         app       = express();
 
 /**
  * DB Connection
  **/
-mongoose.connect(database.url);
+mongoose.connect(database.mongo);
 
 /**
  * Api definition
  **/
+ var accessLogStream = fsr.getStream({
+   date_format: 'YYYYMMDD',
+   filename: logDirectory + '/access-%DATE%.log',
+   frequency: 'daily',
+   verbose: false
+ })
+
 app.use(express.static(__dirname + '/public'));
-app.use(morgan('dev'));
+app.use(morgan('combined', {stream: accessLogStream}));
 app.use(bodyPar.urlencoded({'extended':'true'}));
 app.use(bodyPar.json());
 app.use(bodyPar.json({ type: 'application/vnd.api+json' }));
 app.use(methodOv('X-HTTP-Method-Override'));
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
-// Routes section.
+/**
+ * Routes section
+ **/
+require('./routes/ticket.js')(app);
 
 /**
  * Starting server
