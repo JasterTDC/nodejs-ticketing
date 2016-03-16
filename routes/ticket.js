@@ -13,6 +13,12 @@ module.exports = function(app){
     });
   };
 
+  _infoTickets = function(req, res){
+    res.render('index.twig', {
+      message: 'Master !'
+    });
+  };
+
   _saveTicket = function(req, res){
     console.log(req.body);
 
@@ -31,6 +37,7 @@ module.exports = function(app){
     res.send(tckt);
   };
 
+  app.get('/info/tickets/', _infoTickets);
   app.get('/api/tickets/', _getAllTickets);
   app.post('/api/tickets/', _saveTicket);
 }
