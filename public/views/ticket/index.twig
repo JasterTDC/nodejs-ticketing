@@ -1,0 +1,21 @@
+{% extends '../common/base.twig' %}
+
+{% block head %}
+  {{ parent() }}
+
+  <title> Tickets info </title>
+{% endblock %}
+
+{% block content %}
+
+  <div class="container" >
+    {% if list %}
+      {% for item in list %}
+        <h4> {{ item.title }} </h4>
+        <p> {{ item.issue }} </p>
+        <p> {{ item.description }} </p>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+{% endblock %}

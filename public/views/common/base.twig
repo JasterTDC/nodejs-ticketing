@@ -11,8 +11,14 @@
     {% endblock %}
   </head>
   <body>
-    {% block content %}
+    {% block menu %}
+      {% include './menu.twig' %}
+    {% endblock %}
 
+    {% block content %}
+    {% endblock %}
+
+    {% block js %}
     {% endblock %}
   </body>
 </html>

@@ -16,20 +16,35 @@ module.exports = function(app){
   };
 
   _infoTickets = function(req, res){
-    res.render('index.twig', {
-      message: 'Master !'
+
+    var query = Ticket.find().lean();
+
+    query.exec(function(err, lst){
+      if(err)
+        res.send(err);
+
+      res.render('./ticket/index.twig', {
+        list: lst
+      });
     });
+
   };
 
   _saveTicket = function(req, res){
-    console.log(req.body);
+    var date = new Date(),
+        time = Math.round(date.getTime()/1000);
 
     log.debug( 'Parameters: ' + JSON.stringify(req.body) );
+    log.debug( 'Date: ' + date );
+    log.debug( 'Time: ' + time );
 
     var tckt = new Ticket({
+      issue: time,
       title: req.body.title,
       description: req.body.description
     });
+
+    log.debug ( 'Ticket: ' + JSON.stringify(tckt) );
 
     tckt.save(function(err){
       if(!err)
@@ -41,7 +56,17 @@ module.exports = function(app){
     res.send(tckt);
   };
 
+  _ticketCreate = function(req, res){
+    res.render('./ticket/create.twig');
+  };
+
+  _ticketCreateCall = function(req, res){
+  };
+
   app.get('/info/tickets/', _infoTickets);
   app.get('/api/tickets/', _getAllTickets);
   app.post('/api/tickets/', _saveTicket);
+
+  app.get('/ticket/create/', _ticketCreate);
+  app.post('/ticket/create/', _ticketCreateCall);
 }
