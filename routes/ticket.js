@@ -1,4 +1,6 @@
-var Ticket = require('../models/ticket');
+var Ticket  = require('../models/ticket'),
+    loggers = require('../loggers/ticket.js')(),
+    log     = loggers.getTicketLogger();
 
 module.exports = function(app){
 
@@ -21,6 +23,8 @@ module.exports = function(app){
 
   _saveTicket = function(req, res){
     console.log(req.body);
+
+    log.debug( 'Parameters: ' + JSON.stringify(req.body) );
 
     var tckt = new Ticket({
       title: req.body.title,

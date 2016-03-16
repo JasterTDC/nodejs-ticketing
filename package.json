@@ -12,6 +12,7 @@
     "file-stream-rotator" :       "latest",
     "mongoose" :                  "latest",
     "serve-favicon" :             "latest",
-    "twig" :                      "latest"
+    "twig" :                      "latest",
+    "log4js" :                    "latest"
   }
 }
