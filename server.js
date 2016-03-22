@@ -47,6 +47,7 @@ app.set('views', __dirname + '/public/views');
  * Routes section
  **/
 require('./routes/ticket.js')(app);
+require('./routes/main.js')(app);
 
 /**
  * Starting server
