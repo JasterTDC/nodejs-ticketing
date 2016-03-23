@@ -4,6 +4,12 @@ var Ticket  = require('../models/ticket'),
 
 module.exports = function(app){
 
+  _modifyTicket = function(req, res){
+    res.render('./ticket/modify.twig', {
+
+    });
+  };
+
   _saveTicket = function(req, res){
     var date = new Date(),
         time = Math.round(date.getTime()/1000);
@@ -51,7 +57,7 @@ module.exports = function(app){
       if(err)
         res.send(err);
 
-      console.log(' Ticket > _seeTicket > ' + lst['issue']);
+      console.log(' Ticket > _seeTicket > ' + JSON.stringify(lst));
 
       res.render('./ticket/ticket.twig', {
         'item' : lst
@@ -67,6 +73,7 @@ module.exports = function(app){
 
   app.get('/ticket/create/', _ticketCreate);
   app.get('/ticket/:issue/', _seeTicket);
+  app.get('/ticket/modify/:issue/', _modifyTicket);
 
   app.get('/tickets/', _seeAllTickets);
 }
