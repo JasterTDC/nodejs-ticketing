@@ -90,8 +90,6 @@ module.exports = function(app){
       if(err)
         res.send(err);
 
-      console.log(' Ticket > _seeTicket > ' + JSON.stringify(lst));
-
       res.render('./ticket/ticket.twig', {
         'item' : lst
       });

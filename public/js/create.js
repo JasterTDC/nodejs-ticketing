@@ -10,11 +10,36 @@
   var _jqCreate = $('#create');
 
   /**
+   * @type    {HTMLElement}
+   * @private
+   **/
+  var _jqDescription = $('#description');
+
+  /**
+   * @type    {HTMLElement}
+   * @private
+   **/
+  var _jqTitle = $('#title');
+
+  /**
    * Result container
    * @type    {HTMLElement}
    * @private
    **/
   var _jqResult = $('#result');
+
+  /**
+   * Clean input fields
+   * @type    {HTMLElement}
+   * @private
+   **/
+  var _cleanInput = function(){
+    _jqTitle.val('');
+    _jqTitle.attr('placeholder', 'Insert issue title here ...');
+
+    _jqDescription.val('');
+    _jqDescription.attr('placeholder', 'Insert issue description here ...');
+  };
 
   /**
    * Submit callback
@@ -39,10 +64,12 @@
       url:          _jqCreate.attr('action'),
       type:         _jqCreate.attr('method'),
       success:    function(data){
-        _jqResult.append('<pre>' + JSON.stringify(data, undefined, 2) + '</pre>');
+        swal("Ticket created !", "Ticket has been created successfully. ", "success");
+        _cleanInput.apply(this);
       },
       error:      function(err){
-        console.log(err);
+        swal("Ticket error !", "An error has occured during ticket creation. ", "error");
+        _cleanInput.apply(this);
       }
     });
   };
