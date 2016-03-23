@@ -1,0 +1,42 @@
+{% extends '../common/base.twig' %}
+
+{% block head %}
+  {{ parent() }}
+  <title> Delete ticket </title>
+{% endblock %}
+
+{% block content %}
+  <div class="container" >
+    <h4> Delete ticket </h4>
+
+    <form id="delete" role="form" class="form-horizontal" method="post" action="/ticket/delete/{{ item.issue }}/" >
+
+      <div class="form-group" >
+        <div class="row" >
+          <label for="title" class="control-label col-md-2" > Title </label>
+          <div class="col-md-10" >
+            <input name="title" type="text" class="form-control" value="{{ item.title }}" disabled="true" >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" >
+        <div class="row" >
+          <label for="description" class="control-label col-md-2" > Description </label>
+          <div class="col-md-10" >
+            <textarea name="description" class="form-control" disabled="true" > {{ item.description }} </textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" >
+        <div class="row" >
+          <div class="col-md-2 col-md-offset-2" >
+            <button type="submit" class="btn btn-danger" > Delete </button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+{% endblock %}

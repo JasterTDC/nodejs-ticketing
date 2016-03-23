@@ -1,5 +1,5 @@
 /**
- * @author  Ismael Moral <imoral@nohacefaltapapel-et>
+ * @author  Ismael Moral <jastertdc@gmail.com>
  **/
 (function(jq){
 
