@@ -1,0 +1,13 @@
+{% extends '../common/base.twig' %}
+
+{% block header %}
+  {{ parent() }}
+  <title> Ticket {{ item.issue }} </title>
+{% endblock %}
+
+{% block content %}
+  <div class="container" >
+    <h4> {{ item.title }} </h4>
+    <p> {{ item.description }} </p>
+  </div>
+{% endblock %}

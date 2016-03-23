@@ -9,8 +9,7 @@
   <div class="container" >
     {% if list %}
       {% for item in list %}
-        <h4> {{ item.title }} </h4>
-        <p> {{ item.issue }} </p>
+        <h4><a href="/ticket/{{ item.issue }}" > {{ item.title }} </a></h4>
         <p> {{ item.description }} </p>
       {% endfor %}
     {% endif %}

@@ -4,17 +4,6 @@ var Ticket  = require('../models/ticket'),
 
 module.exports = function(app){
 
-   _getAllTickets = function(req, res){
-    var query = Ticket.find().lean();
-
-    query.exec(function(err, lst){
-      if(err)
-        res.send(err);
-
-      res.json(lst);
-    });
-  };
-
   _saveTicket = function(req, res){
     var date = new Date(),
         time = Math.round(date.getTime()/1000);
@@ -54,18 +43,30 @@ module.exports = function(app){
     });
   };
 
+  _seeTicket = function(req, res){
+    var query = Ticket.findOne().where('issue').equals(req.params.issue).lean(),
+        json  = {};
+
+    query.exec(function(err, lst){
+      if(err)
+        res.send(err);
+
+      console.log(' Ticket > _seeTicket > ' + lst['issue']);
+
+      res.render('./ticket/ticket.twig', {
+        'item' : lst
+      });
+    });
+  };
+
   _ticketCreate = function(req, res){
     res.render('./ticket/create.twig');
   };
 
-  _ticketCreateCall = function(req, res){
-  };
-
-  app.get('/api/tickets/', _getAllTickets);
   app.post('/api/tickets/', _saveTicket);
 
   app.get('/ticket/create/', _ticketCreate);
-  app.post('/ticket/create/', _ticketCreateCall);
+  app.get('/ticket/:issue/', _seeTicket);
 
   app.get('/tickets/', _seeAllTickets);
 }
