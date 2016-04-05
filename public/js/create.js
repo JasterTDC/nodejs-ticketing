@@ -64,7 +64,7 @@
       url:          _jqCreate.attr('action'),
       type:         _jqCreate.attr('method'),
       success:    function(data){
-        swal("Ticket created !", "Ticket has been created successfully. ", "success");
+        window.location.href = "/tickets/";
         _cleanInput.apply(this);
       },
       error:      function(err){

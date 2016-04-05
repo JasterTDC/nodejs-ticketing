@@ -9,7 +9,7 @@
   <div class="container" >
     <h4> Delete ticket </h4>
 
-    <form id="delete" role="form" class="form-horizontal" method="post" action="/ticket/delete/{{ item.issue }}/" >
+    <form id="delete" role="form" class="form-horizontal" method="delete" action="/ticket/delete/{{ item.issue }}/" >
 
       <div class="form-group" >
         <div class="row" >
@@ -39,4 +39,8 @@
 
     </form>
   </div>
+{% endblock %}
+
+{% block js %}
+  <script src="/js/delete.js" type="text/javascript" ></script>
 {% endblock %}

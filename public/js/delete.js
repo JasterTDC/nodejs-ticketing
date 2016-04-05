@@ -44,7 +44,19 @@
           url:          _jqDelete.attr('action'),
           type:         "DELETE",
           success:    function(data){
-            swal("Ticket deleted !", "Ticket has been deleted successfully", "success");
+            swal({
+              title:  "Are you sure?",
+              text:   "You will not be able to recover this issue !",
+              type:   "warning",
+              showCancelButton:   false,
+              confirmButtonText:  "Yes, delete it!",
+              closeOnConfirm:     false,
+            },
+            function(isConfirm){
+              if (isConfirm){
+                window.location.href = '/tickets/';
+              }
+            });
           },
           error:      function(err){
             swal("Ticket error !", "Something wrong happened with the ticket deleting ", "error");

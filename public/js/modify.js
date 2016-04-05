@@ -4,6 +4,13 @@
 (function(jq){
 
     /**
+     * Issue number
+     * @type    {Number}
+     * @private
+     **/
+    var _issue = ticket.issue;
+
+    /**
      * @type    {HTMLElement}
      * @private
      **/
@@ -60,7 +67,19 @@
         url:          _jqModify.attr('action'),
         type:         "PUT",
         success:    function(data){
-          swal("Ticket updated !", "Ticket info has been updated successfully", "success");
+          swal({
+            title:  "Are you sure?",
+            text:   "This action cannot be undone!",
+            type:   "warning",
+            showCancelButton:   false,
+            closeOnConfirm:     false,
+            confirmButtonText:  "Yes, modify it!"
+          },
+          function(isConfirm){
+            if (isConfirm){
+              window.location.href = "/ticket/" + _issue + "/";
+            }
+          });
         },
         error:      function(err){
           swal("Ticket error !", "Something wrong happened with the ticket updating ", "error");

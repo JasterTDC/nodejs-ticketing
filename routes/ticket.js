@@ -4,6 +4,19 @@ var Ticket  = require('../models/ticket'),
 
 module.exports = function(app){
 
+  _deleteTicket = function(req, res){
+    var query = Ticket.findOne().where('issue').equals(req.params.issue).remove();
+
+    query.exec(function(err, item){
+      if(err)
+        res.send(err);
+
+      log.debug('_deleteTicket > Issue: ' + JSON.stringify(item));
+
+      res.send(item);
+    });
+  };
+
   _deleteTicketForm = function(req, res){
     var query = Ticket.findOne().where('issue').equals(req.params.issue).lean();
 
@@ -114,6 +127,8 @@ module.exports = function(app){
   _ticketCreate = function(req, res){
     res.render('./ticket/create.twig');
   };
+
+  app.delete('/ticket/delete/:issue/', _deleteTicket);
 
   app.get('/ticket/create/', _ticketCreate);
   app.get('/ticket/:issue/', _seeTicket);
