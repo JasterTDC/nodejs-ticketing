@@ -1,9 +1,20 @@
+// Dependencies
 var Ticket  = require('../models/ticket'),
-    loggers = require('../loggers/ticket.js')(),
+    loggers = require('../../loggers/ticket.js')(),
     log     = loggers.getTicketLogger();
 
+/**
+ * Ticket routes
+ * @param app
+ **/
 module.exports = function(app){
 
+  /**
+   * Delete ticket from the system
+   * @param   req
+   * @param   res
+   * @private
+   **/
   _deleteTicket = function(req, res){
     var query = Ticket.findOne().where('issue').equals(req.params.issue).remove();
 
@@ -17,6 +28,12 @@ module.exports = function(app){
     });
   };
 
+  /**
+   * Delete ticket form
+   * @param   req
+   * @param   res
+   * @private
+   **/
   _deleteTicketForm = function(req, res){
     var query = Ticket.findOne().where('issue').equals(req.params.issue).lean();
 

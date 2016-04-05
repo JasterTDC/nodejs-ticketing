@@ -1,6 +1,4 @@
-/**
- * Declaration
- **/
+// Declaration section
 var     express   = require('express'),
         database  = require('./config/database.js'),
         morgan    = require('morgan'),
@@ -14,21 +12,18 @@ var     express   = require('express'),
         Twig      = require('twig'),
         app       = express();
 
-/**
- * DB Connection
- **/
+// Connect with database
 mongoose.connect(database.mongo);
 
-/**
- * Api definition
- **/
+// Access log definition
  var accessLogStream = fsr.getStream({
    date_format: 'YYYYMMDD',
    filename: logDirectory + '/access-%DATE%.log',
    frequency: 'daily',
    verbose: false
- })
+ });
 
+// Setting twig options
 app.set('twig options', {
   strict_variables: false
 });
@@ -41,16 +36,14 @@ app.use(bodyPar.json({ type: 'application/vnd.api+json' }));
 app.use(methodOv('X-HTTP-Method-Override'));
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
+// Views directory
 app.set('views', __dirname + '/public/views');
 
-/**
- * Routes section
- **/
-require('./routes/ticket.js')(app);
-require('./routes/main.js')(app);
+// Routes definitions
+require('./app/routes/main.js')(app);
+require('./app/routes/ticket.js')(app);
+require('./app/routes/category.js')(app);
 
-/**
- * Starting server
- **/
+// Starting server
 app.listen (port)
 console.log ("Listening on port: " + port);
