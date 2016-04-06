@@ -1,5 +1,7 @@
 // Dependencies
-var Category = require('../models/category');
+var Category  = require('../models/category'),
+    logger    = require('../../loggers/category')(),
+    log       = logger.getCategoryLogger();
 
 /**
  * Category routes
@@ -26,6 +28,25 @@ module.exports = function(app){
    * @private
    **/
   _insertNewCategory = function(req, res){
+    var date  = new Date(),
+        time  = Math.round(date.getTime()/1000);
+
+    // TODO: Make a validation for parent
+    var cat   = new Category({
+      name:     req.body.name,
+      parent:   req.body.parent
+    });
+
+    log.debug('_insertNewCategory > Category: ' + JSON.stringify(cat));
+
+    cat.save(function(err){
+      if (err)
+        res.send(err);
+
+      log.debug('_insertNewCategory > Category was created successfully !');
+
+      res.send(cat);
+    });
   };
 
   /**
@@ -55,5 +76,5 @@ module.exports = function(app){
   app.get('/category/insert/', _insertNewCategoryForm);
 
   // Call to insert a new category
-  app.post('category/insert/', _insertNewCategory);
+  app.post('/category/insert/', _insertNewCategory);
 }
